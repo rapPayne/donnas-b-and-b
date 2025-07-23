@@ -22,7 +22,6 @@ const Help = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!question.trim()) return;
 
     // Add user message
@@ -32,7 +31,6 @@ const Help = () => {
       isUser: true,
       timestamp: new Date()
     };
-
     setMessages(prev => [...prev, userMessage]);
     setQuestion('');
     setIsLoading(true);
@@ -46,12 +44,12 @@ const Help = () => {
         body: JSON.stringify({ question }),
       });
 
-      const data = await response.text();
-      console.log({ data })
+      const data = await response.json();
+
       if (response.ok) {
         const botMessage: Message = {
           id: Date.now() + 1,
-          text: data,
+          text: data.response,
           isUser: false,
           timestamp: new Date()
         };
@@ -60,7 +58,6 @@ const Help = () => {
         throw new Error(data.error || 'Something went wrong');
       }
     } catch (error) {
-      console.error(error)
       const errorMessage: Message = {
         id: Date.now() + 1,
         text: "I'm sorry, I'm having trouble connecting right now. Please try again later or call us at (555) 123-4567 for immediate assistance.",
@@ -140,7 +137,6 @@ const Help = () => {
                 </div>
               </div>
             ))}
-
             {isLoading && (
               <div className="flex justify-start">
                 <div className="flex items-start space-x-3">
