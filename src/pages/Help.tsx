@@ -44,20 +44,21 @@ const Help = () => {
         body: JSON.stringify({ question }),
       });
 
-      const data = await response.json();
+      const data: string = await response.text();
 
       if (response.ok) {
         const botMessage: Message = {
           id: Date.now() + 1,
-          text: data.response,
+          text: data,
           isUser: false,
           timestamp: new Date()
         };
         setMessages(prev => [...prev, botMessage]);
       } else {
-        throw new Error(data.error || 'Something went wrong');
+        throw new Error(response.statusText || 'Something went wrong');
       }
     } catch (error) {
+      console.error(error)
       const errorMessage: Message = {
         id: Date.now() + 1,
         text: "I'm sorry, I'm having trouble connecting right now. Please try again later or call us at (555) 123-4567 for immediate assistance.",
