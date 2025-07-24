@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
+import { setupLCELChain } from "./chain.js";
+import { createAskRoute } from "./askRoute.js";
 
 const app = express();
 const PORT = process.env.PORT || 5100;
@@ -11,6 +13,11 @@ const openAI_API_KEY = process.env.OPENAI_API_KEY;
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Process the PDF book
+const chain = await setupLCELChain("server/book.pdf");
+app.use("/api", createAskRoute(chain));
+
 
 // Sample responses for the help system
 const helpResponses = {

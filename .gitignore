@@ -1,3 +1,6 @@
+# The pdf book shouldn't be committed
+book.pdf
+
 # Dependencies
 node_modules/
 npm-debug.log*
