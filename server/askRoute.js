@@ -7,15 +7,15 @@ export function createAskRoute(chain) {
     const { question } = req.body;
 
     if (!question) {
-      return res.status(400).json({ error: "No question provided" });
+      return res.status(400).json({ error: "I didn't see a question. Please ask one." });
     }
 
     try {
       const answer = await chain.invoke({ question });
       res.json({ answer });
     } catch (err) {
-      console.error("Chain error:", err);
-      res.status(500).json({ error: "Internal server error" });
+      console.error("LCEL Chain error:", err);
+      res.status(500).json({ error: "Internal server error. Please try again." });
     }
   });
 
