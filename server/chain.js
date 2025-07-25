@@ -27,10 +27,11 @@ export async function setupLCELChain(pdfPath) {
 
   // Prompt template - each request will be sent to OpenAI in this format.
   const promptTemplate = PromptTemplate.fromTemplate(
-    `Answer the question based only on the following context:
+    `Answer the question based on the following context:
 
 {context}
 
+If the answer is not found in this context, answer it as best you can from your knowledge.
 Question: {question}`
   );
 
@@ -50,6 +51,7 @@ Question: {question}`
     model,  // Sends the formatted prompt to OpenAI
     new StringOutputParser(),  // Gets the output from OpenAI and pulls out the answer in plain text.
   ]);
+
 
   return chain;
 }
